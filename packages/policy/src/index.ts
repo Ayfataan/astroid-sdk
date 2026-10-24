@@ -1,5 +1,6 @@
 import { Resource, type RequestOptionsExtras } from '@astroid/core';
 import type {
+  CreatePolicyInput,
   Paginated,
   Policy,
   PolicySimulationEvaluation,
@@ -50,6 +51,7 @@ export {
   simulatePolicy,
   POLICY_SIMULATE_PATH,
   type PolicySimulationHttpClient,
+  type PolicySimulationOptions,
 } from './simulate-policy.js';
 
 /**
@@ -183,10 +185,9 @@ export { PolicyType } from '@astroid/types';
  * are omitted rather than made optional, so a stale `id` or `deletedAt` left
  * over from a fetched record is a compile error rather than a silent overwrite.
  */
-export type PolicyCreateInput = Omit<
-  Policy,
-  'id' | 'organizationId' | 'createdAt' | 'updatedAt' | 'deletedAt'
->;
+export type PolicyCreateInput =
+  | CreatePolicyInput
+  | Omit<Policy, 'id' | 'organizationId' | 'createdAt' | 'updatedAt' | 'deletedAt'>;
 
 /**
  * The payload accepted by {@link PolicyResource.update}.
@@ -638,5 +639,5 @@ export class PolicyResource extends Resource {
 /** Alias of {@link PolicyResource} matching the `*sResource` client naming. */
 export const PoliciesResource = PolicyResource;
 
-export * from './simulator.js';
 export * from './builder.js';
+export * from './validation.js';
